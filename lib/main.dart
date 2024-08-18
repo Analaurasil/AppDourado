@@ -1,12 +1,14 @@
-import 'package:dealmaster/cadastro.dart';
+//import 'package:dealmaster/cadastro.dart';
 //import 'package:dealmaster/login.dart';
 import 'package:flutter/material.dart';
+import 'package:dealmaster/formcontrato.dart';
 
 void main() {
   runApp(MaterialApp(
     theme: ThemeData(
       primaryColor: Color.fromRGBO(255, 151, 76, 1),
       scaffoldBackgroundColor: Colors.white,
+
       appBarTheme: AppBarTheme(
         color:  Color.fromRGBO(255, 151, 76, 1),
         titleTextStyle: TextStyle(
@@ -51,13 +53,21 @@ void main() {
         //styleFrom({Color? foregroundColor, Color? backgroundColor, Color? disabledForegroundColor, Color? disabledBackgroundColor, Color? shadowColor, Color? surfaceTintColor, Color? iconColor, Color? disabledIconColor, Color? overlayColor, double? elevation, TextStyle? textStyle, EdgeInsetsGeometry? padding, Size? minimumSize, Size? fixedSize, Size? maximumSize, BorderSide? side, OutlinedBorder? shape, MouseCursor? enabledMouseCursor, MouseCursor? disabledMouseCursor, VisualDensity? visualDensity, MaterialTapTargetSize? tapTargetSize, Duration? animationDuration, bool? enableFeedback,
       ),
       textTheme: TextTheme(
-
+        bodyLarge: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.black
+        )
       ),
       iconTheme: IconThemeData(
         color: Colors.white,
+      ),
+      radioTheme: RadioThemeData(
+        fillColor: WidgetStateProperty.all(Color.fromRGBO(255, 151, 76, 1)),
+        overlayColor: WidgetStateProperty.all(Color.fromRGBO(255, 151, 76, 0.7)),
+        splashRadius: 10.0,
       )
     ),
-    home: TelaCadastro()
+    home: FormContrato()
   ));
 }
 
