@@ -82,7 +82,7 @@ class _FormContratoState extends State<FormContrato> {
                 labelText: 'CNPJ/CPF',
               ),
             ),
-             SizedBox(height: 20.0),
+            SizedBox(height: 20.0),
             Text(
               'CONTRATADA',
               style: Theme.of(context).textTheme.bodyLarge,
@@ -153,7 +153,8 @@ class _FormContratoState extends State<FormContrato> {
     );
   }
 
-  Widget _buildSignatureField(String label, Uint8List? signature, VoidCallback onTap) {
+  Widget _buildSignatureField(
+      String label, Uint8List? signature, VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -168,7 +169,8 @@ class _FormContratoState extends State<FormContrato> {
     );
   }
 
-  void _openSignaturePad(BuildContext context, Function(Uint8List) onSignatureSelected) {
+  void _openSignaturePad(
+      BuildContext context, Function(Uint8List) onSignatureSelected) {
     final SignatureController _controller = SignatureController(
       penStrokeWidth: 5,
       penColor: Colors.black,
