@@ -2,19 +2,21 @@ import 'package:flutter/material.dart';
 
 // Classe principal que define a página inicial como um StatefulWidget
 class HomePage extends StatefulWidget {
+  const HomePage({super.key});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
   // Estado que mantém o índice da aba selecionada
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
   // Lista de páginas que serão exibidas conforme o usuário navega entre as abas
   final List<Widget> _pages = [
-    AgendaPage(), // Página da Agenda
-    ContractsPage(), // Página de Contratos
-    ReportPage(), // Página de Relatório
+     ContractsPage(), // Página de Contratos
+     AgendaPage(), // Página da Agenda
+     ReportPage(), // Página de Relatório
   ];
 
   // Função chamada quando o usuário seleciona uma aba no BottomNavigationBar
@@ -30,22 +32,22 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       // AppBar que exibe o título da aplicação no topo
       appBar: AppBar(
-        title: Text('DealMaster'),
+        title: const Text('DealMaster'),
       ),
       // O corpo da tela será a página correspondente ao índice selecionado
       body: _pages[_selectedIndex],
       // BottomNavigationBar que permite ao usuário navegar entre as páginas
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
-          // Item do BottomNavigationBar para a página de Agenda
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today), // Ícone da aba
-            label: 'Agenda', // Texto da aba
-          ),
           // Item do BottomNavigationBar para a página de Contratos
           BottomNavigationBarItem(
             icon: Icon(Icons.description), // Ícone da aba
             label: 'Contratos', // Texto da aba
+          ),
+          // Item do BottomNavigationBar para a página de Agenda
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today), // Ícone da aba
+            label: 'Agenda', // Texto da aba
           ),
           // Item do BottomNavigationBar para a página de Relatório
           BottomNavigationBarItem(
@@ -55,7 +57,7 @@ class _HomePageState extends State<HomePage> {
         ],
         currentIndex:
             _selectedIndex, // Índice atual que controla qual página é exibida
-        selectedItemColor: Color.fromRGBO(
+        selectedItemColor: const Color.fromRGBO(
             255, 151, 76, 1), // Cor do ícone e texto da aba selecionada
         onTap:
             _onItemTapped, // Chama a função quando o usuário seleciona uma aba
@@ -73,6 +75,8 @@ class AgendaPage extends StatelessWidget {
     'Call com a equipe - 03:00 PM'
   ];
 
+   AgendaPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -81,7 +85,7 @@ class AgendaPage extends StatelessWidget {
       // Constrói cada item da lista com base no índice
       itemBuilder: (context, index) {
         return ListTile(
-          leading: Icon(Icons.event), // Ícone na frente de cada compromisso
+          leading: const Icon(Icons.event), // Ícone na frente de cada compromisso
           title: Text(_appointments[index]), // Texto do compromisso
         );
       },
@@ -98,6 +102,8 @@ class ContractsPage extends StatelessWidget {
     'Contrato C - Finalizado'
   ];
 
+   ContractsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -106,9 +112,9 @@ class ContractsPage extends StatelessWidget {
       // Constrói cada item da lista com base no índice
       itemBuilder: (context, index) {
         return ListTile(
-          leading: Icon(Icons.description), // Ícone na frente de cada contrato
+          leading: const Icon(Icons.description), // Ícone na frente de cada contrato
           title: Text(_contracts[index]), // Texto do contrato
-          trailing: Icon(Icons.arrow_forward), // Ícone de seta à direita
+          trailing: const Icon(Icons.arrow_forward), // Ícone de seta à direita
           onTap: () {
             // Lógica para navegar para os detalhes do contrato
             // Ainda não implementado
@@ -128,6 +134,8 @@ class ReportPage extends StatelessWidget {
     'Contratos finalizados: 5',
   ];
 
+  ReportPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -143,7 +151,7 @@ class ReportPage extends StatelessWidget {
                 .textTheme
                 .headlineSmall, // Usando o estilo de texto padrão do tema
           ),
-          SizedBox(
+          const SizedBox(
               height:
                   10.0), // Espaçamento entre o título e a lista de relatórios
           // Lista dos relatórios
@@ -152,20 +160,20 @@ class ReportPage extends StatelessWidget {
             itemCount: _reports.length, // Número de relatórios na lista
             itemBuilder: (context, index) {
               return ListTile(
-                leading: Icon(Icons
+                leading: const Icon(Icons
                     .bar_chart), // Ícone de gráfico ao lado de cada relatório
                 title: Text(_reports[index]), // Texto do relatório
               );
             },
           ),
-          SizedBox(height: 20.0), // Espaçamento antes do botão
+          const SizedBox(height: 20.0), // Espaçamento antes do botão
           // Botão para gerar relatório completo
           ElevatedButton(
             onPressed: () {
               // Ação para gerar um relatório completo
               // Ainda não implementado
             },
-            child: Text('Gerar Relatório Completo'), // Texto do botão
+            child: const Text('Gerar Relatório Completo'), // Texto do botão
           ),
         ],
       ),

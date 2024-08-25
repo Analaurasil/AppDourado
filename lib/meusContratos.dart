@@ -25,13 +25,15 @@ class MeusContratos extends StatelessWidget {
     },
   ];
 
+   MeusContratos({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         // Estilização da AppBar de acordo com o protótipo
-        backgroundColor: Color.fromRGBO(255, 151, 76, 1), // Cor personalizada
-        title: Text(
+        backgroundColor: const Color.fromRGBO(255, 151, 76, 1), // Cor personalizada
+        title: const Text(
           'Meus Contratos',
           style: TextStyle(
             fontWeight: FontWeight.bold, // Negrito no título
@@ -49,20 +51,20 @@ class MeusContratos extends StatelessWidget {
             return Card(
               elevation: 4, // Sombra para destacar o cartão
               margin:
-                  EdgeInsets.symmetric(vertical: 10.0), // Espaçamento vertical
+                  const EdgeInsets.symmetric(vertical: 10.0), // Espaçamento vertical
               shape: RoundedRectangleBorder(
                 borderRadius:
                     BorderRadius.circular(15.0), // Bordas arredondadas
               ),
               child: ListTile(
-                leading: CircleAvatar(
+                leading: const CircleAvatar(
                   // Usando um avatar circular com o ícone de contrato
                   backgroundColor: Colors.orangeAccent,
                   child: Icon(Icons.description, color: Colors.white),
                 ),
                 title: Text(
                   _contracts[index]['nome']!,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold, // Negrito no nome do contrato
                   ),
@@ -73,12 +75,12 @@ class MeusContratos extends StatelessWidget {
                     Text(
                       _contracts[index]
                           ['contratante']!, // Contratante do contrato
-                      style: TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16),
                     ),
-                    SizedBox(height: 4.0),
+                    const SizedBox(height: 4.0),
                     Text(
                       'Vencimento: ${_contracts[index]['vencimento']!}', // Data de vencimento
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
                       ),

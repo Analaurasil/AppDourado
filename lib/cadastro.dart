@@ -1,14 +1,25 @@
 import 'package:flutter/material.dart';
 
-class TelaCadastro extends StatelessWidget {
+class TelaCadastro extends StatefulWidget {
+  const TelaCadastro({super.key});
+
+  @override
+  _TelaCadastroState createState() => _TelaCadastroState();
+}
+
+class _TelaCadastroState extends State<TelaCadastro> {
+  String? _tipoUsuario = 'PF';
+
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            const Text(
               'Contratante',
               style: TextStyle(
                 fontSize: 20,
@@ -16,40 +27,67 @@ class TelaCadastro extends StatelessWidget {
                 color: Colors.black,
               ),
             ),
-            ListTile(
-              title: Text('PF')
+            const SizedBox(height: 20),
+            const Text(
+              'Tipo de Usuário:',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
             ),
-            ListTile(
-              title: Text('PJ'),
+            RadioListTile<String>(
+              title: const Text('PF'),
+              value: 'PF',
+              groupValue: _tipoUsuario,
+              activeColor: theme.primaryColor,
+              onChanged: (String? value) {
+                setState(() {
+                  _tipoUsuario = value;
+                });
+              },
             ),
-            SizedBox(height: 20),
-            TextField(
+            RadioListTile<String>(
+              title: const Text('PJ'),
+              value: 'PJ',
+              groupValue: _tipoUsuario,
+              activeColor: theme.primaryColor,
+              onChanged: (String? value) {
+                setState(() {
+                  _tipoUsuario = value;
+                });
+              },
+            ),
+            const SizedBox(height: 20),
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'Nome',
               ),
             ),
-            SizedBox(height: 20),
-            TextField(
+            const SizedBox(height: 20),
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'Email',
               ),
             ),
-            SizedBox(height: 20),
-            TextField(
+            const SizedBox(height: 20),
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'Senha',
               ),
+              obscureText: true,
             ),
-            SizedBox(height: 20),
-            Text('Tipo de Usuário:'),
+            const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: (){
-
-              }, 
-              child: 
-                Text('Salvar')
+              onPressed: () {
+                
+              },
+              child: const Text('Salvar'),
+              style: ElevatedButton.styleFrom(
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 15),
+                textStyle: const TextStyle(fontSize: 16),
               ),
-            SizedBox(height: 10),
+            ),
           ],
         ),
       ),

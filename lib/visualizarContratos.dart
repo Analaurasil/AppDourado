@@ -8,7 +8,7 @@ class VisualizarContrato extends StatelessWidget {
   final String vencimento;
 
   // Construtor que recebe os dados do contrato
-  VisualizarContrato({
+  const VisualizarContrato({super.key, 
     required this.nome,
     required this.contratante,
     required this.cpfCnpj,
@@ -20,10 +20,10 @@ class VisualizarContrato extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor:
-            Color.fromRGBO(255, 151, 76, 1), // Cor personalizada da AppBar
+            const Color.fromRGBO(255, 151, 76, 1), // Cor personalizada da AppBar
         title: Text(
           nome, // O título da AppBar é o nome do contrato
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold, // Negrito no título
           ),
         ),
@@ -38,13 +38,13 @@ class VisualizarContrato extends StatelessWidget {
             // Exibe o nome do contrato com estilo destacado
             Text(
               nome,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.bold, // Negrito para destaque
                 color: Colors.black87, // Cor do texto
               ),
             ),
-            SizedBox(height: 24.0), // Espaçamento vertical
+            const SizedBox(height: 24.0), // Espaçamento vertical
             // Exibe o contratante do contrato com um rótulo
             Text(
               'Contratante:',
@@ -53,16 +53,16 @@ class VisualizarContrato extends StatelessWidget {
                 color: Colors.grey[700], // Cor mais suave para o rótulo
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Text(
               contratante,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w500, // Negrito moderado
                 color: Colors.black87,
               ),
             ),
-            SizedBox(height: 20.0), // Espaçamento vertical
+            const SizedBox(height: 20.0), // Espaçamento vertical
             // Exibe o CPF/CNPJ do contratante com um rótulo
             Text(
               'CPF/CNPJ:',
@@ -71,16 +71,16 @@ class VisualizarContrato extends StatelessWidget {
                 color: Colors.grey[700],
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Text(
               cpfCnpj,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
                 color: Colors.black87,
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
 
             // ebxie a data de vencimento do contrato com um rotulo
             Text(
@@ -90,16 +90,16 @@ class VisualizarContrato extends StatelessWidget {
                 color: Colors.grey[700],
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             Text(
               vencimento,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w500,
                 color: Colors.black87,
               ),
             ),
-            Spacer(), // Espaçamento flexível para empurrar o botão para o final da tela
+            const Spacer(), // Espaçamento flexível para empurrar o botão para o final da tela
             // Botão estilizado para realizar uma ação no contrato
             ElevatedButton(
               onPressed: () {
@@ -107,14 +107,14 @@ class VisualizarContrato extends StatelessWidget {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor:
-                    Color.fromRGBO(255, 151, 76, 1), // Cor do botão atualizada
-                padding: EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+                    const Color.fromRGBO(255, 151, 76, 1), // Cor do botão atualizada
+                padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
                 shape: RoundedRectangleBorder(
                   borderRadius:
                       BorderRadius.circular(10.0), // Bordas arredondadas
                 ),
               ),
-              child: Text(
+              child: const Text(
                 'Editar Contrato',
                 style: TextStyle(
                   fontSize: 18,

@@ -9,11 +9,13 @@ class TelaRelatorio extends StatelessWidget {
     {'categoria': 'Contratos Pendente de Assinatura', 'quantidade': 3},
   ];
 
+   TelaRelatorio({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Relatório de Contratos'), // Título da AppBar
+        title: const Text('Relatório de Contratos'), // Título da AppBar
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0), // Define o espaçamento da tela
@@ -28,7 +30,7 @@ class TelaRelatorio extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
             ),
-            SizedBox(height: 16.0), // Espaçamento entre o título e o gráfico
+            const SizedBox(height: 16.0), // Espaçamento entre o título e o gráfico
 
             // Exibe um gráfico simplificado (representado por um widget ListView neste caso)
             Expanded(
@@ -44,7 +46,7 @@ class TelaRelatorio extends StatelessWidget {
                       children: [
                         Text(
                           _relatorioDados[index]['categoria'],
-                          style: TextStyle(fontSize: 18),
+                          style: const TextStyle(fontSize: 18),
                         ),
                         Container(
                           height: 10,
@@ -53,7 +55,7 @@ class TelaRelatorio extends StatelessWidget {
                         ),
                         Text(
                           '${_relatorioDados[index]['quantidade']}',
-                          style: TextStyle(fontSize: 18),
+                          style: const TextStyle(fontSize: 18),
                         ),
                       ],
                     ),
@@ -61,39 +63,39 @@ class TelaRelatorio extends StatelessWidget {
                 },
               ),
             ),
-            SizedBox(height: 20.0), // Espaçamento entre o gráfico e os botões
+            const SizedBox(height: 20.0), // Espaçamento entre o gráfico e os botões
 
             // Botão para gerar um relatório completo em PDF ou outro formato
             ElevatedButton.icon(
               onPressed: () {
                 // Ação de gerar um relatório completo
               },
-              icon: Icon(Icons.picture_as_pdf), // Ícone de PDF
-              label: Text('Gerar Relatório Completo'),
+              icon: const Icon(Icons.picture_as_pdf), // Ícone de PDF
+              label: const Text('Gerar Relatório Completo'),
               style: ElevatedButton.styleFrom(
                 backgroundColor:
-                    Color.fromRGBO(255, 151, 76, 1), // Cor personalizada
-                padding: EdgeInsets.symmetric(
+                    const Color.fromRGBO(255, 151, 76, 1), // Cor personalizada
+                padding: const EdgeInsets.symmetric(
                     vertical: 12.0, horizontal: 20.0), // Padding
-                textStyle: TextStyle(fontSize: 18), // Estilo do texto do botão
+                textStyle: const TextStyle(fontSize: 18), // Estilo do texto do botão
               ),
             ),
 
-            SizedBox(height: 10.0),
+            const SizedBox(height: 10.0),
 
             // Botão para exportar o relatório
             ElevatedButton.icon(
               onPressed: () {
                 // Ação de exportar o relatório
               },
-              icon: Icon(Icons.file_download), // Ícone de download
-              label: Text('Exportar Relatório'),
+              icon: const Icon(Icons.file_download), // Ícone de download
+              label: const Text('Exportar Relatório'),
               style: ElevatedButton.styleFrom(
                 backgroundColor:
-                    Color.fromRGBO(255, 151, 76, 1), // Cor personalizada
-                padding: EdgeInsets.symmetric(
+                    const Color.fromRGBO(255, 151, 76, 1), // Cor personalizada
+                padding: const EdgeInsets.symmetric(
                     vertical: 12.0, horizontal: 20.0), // Padding
-                textStyle: TextStyle(fontSize: 18), // Estilo do texto do botão
+                textStyle: const TextStyle(fontSize: 18), // Estilo do texto do botão
               ),
             ),
           ],

@@ -2,18 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:signature/signature.dart';
 import 'dart:typed_data';
 
-void main() => runApp(SignatureApp());
+void main() => runApp(const SignatureApp());
 
 class SignatureApp extends StatelessWidget {
+  const SignatureApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: FormContrato(),
     );
   }
 }
 
 class FormContrato extends StatefulWidget {
+  const FormContrato({super.key});
+
   @override
   _FormContratoState createState() => _FormContratoState();
 }
@@ -27,7 +31,7 @@ class _FormContratoState extends State<FormContrato> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Contrato'),
+        title: const Text('Contrato'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -43,7 +47,7 @@ class _FormContratoState extends State<FormContrato> {
               children: [
                 Expanded(
                   child: ListTile(
-                    title: Text('PJ'),
+                    title: const Text('PJ'),
                     leading: Radio<String>(
                       value: 'PJ',
                       groupValue: _selectedOption,
@@ -57,7 +61,7 @@ class _FormContratoState extends State<FormContrato> {
                 ),
                 Expanded(
                   child: ListTile(
-                    title: Text('PF'),
+                    title: const Text('PF'),
                     leading: Radio<String>(
                       value: 'PF',
                       groupValue: _selectedOption,
@@ -71,36 +75,36 @@ class _FormContratoState extends State<FormContrato> {
                 ),
               ],
             ),
-            TextField(
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'Nome',
               ),
             ),
-            SizedBox(height: 5.0),
-            TextField(
+            const SizedBox(height: 5.0),
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'CNPJ/CPF',
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Text(
               'CONTRATADA',
               style: Theme.of(context).textTheme.bodyLarge,
             ),
-            SizedBox(height: 5.0),
-            TextField(
+            const SizedBox(height: 5.0),
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'Nome',
               ),
             ),
-            SizedBox(height: 5.0),
-            TextField(
+            const SizedBox(height: 5.0),
+            const TextField(
               decoration: InputDecoration(
                 labelText: 'CNPJ',
               ),
             ),
-            SizedBox(height: 5.0),
-            TextField(
+            const SizedBox(height: 5.0),
+            const TextField(
               maxLines: null,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
@@ -108,7 +112,7 @@ class _FormContratoState extends State<FormContrato> {
               ),
               keyboardType: TextInputType.multiline,
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Row(
               children: [
                 Expanded(
@@ -124,7 +128,7 @@ class _FormContratoState extends State<FormContrato> {
                     },
                   ),
                 ),
-                SizedBox(width: 10.0),
+                const SizedBox(width: 10.0),
                 Expanded(
                   child: _buildSignatureField(
                     'Assinatura da Contratada',
@@ -140,12 +144,12 @@ class _FormContratoState extends State<FormContrato> {
                 ),
               ],
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
                 // Ação de salvar
               },
-              child: Text('Salvar'),
+              child: const Text('Salvar'),
             ),
           ],
         ),
@@ -164,14 +168,14 @@ class _FormContratoState extends State<FormContrato> {
         ),
         child: signature != null
             ? Image.memory(signature)
-            : Center(child: Text('$label')),
+            : Center(child: Text(label)),
       ),
     );
   }
 
   void _openSignaturePad(
       BuildContext context, Function(Uint8List) onSignatureSelected) {
-    final SignatureController _controller = SignatureController(
+    final SignatureController controller = SignatureController(
       penStrokeWidth: 5,
       penColor: Colors.black,
     );
@@ -180,9 +184,9 @@ class _FormContratoState extends State<FormContrato> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text('Assine aqui'),
+          title: const Text('Assine aqui'),
           content: Signature(
-            controller: _controller,
+            controller: controller,
             width: 300,
             height: 300,
             backgroundColor: Colors.grey[200]!,
@@ -190,19 +194,19 @@ class _FormContratoState extends State<FormContrato> {
           actions: [
             TextButton(
               onPressed: () {
-                _controller.clear();
+                controller.clear();
               },
-              child: Text('Limpar'),
+              child: const Text('Limpar'),
             ),
             TextButton(
               onPressed: () async {
-                final signature = await _controller.toPngBytes();
+                final signature = await controller.toPngBytes();
                 if (signature != null) {
                   onSignatureSelected(signature);
                 }
                 Navigator.of(context).pop();
               },
-              child: Text('Salvar'),
+              child: const Text('Salvar'),
             ),
           ],
         );

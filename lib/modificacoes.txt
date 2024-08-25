@@ -1,0 +1,31 @@
+/--------------------------------------------------------------------------------------------------------------------------------/
+                                                      |  Maicon  |
+                                                      REMOVI A PASTA TEST porque só gerava erro
+main.dart{
+    main reorganizado separando o tema numa func
+    usei a classe my app extendendo a stl so pra encapsular o material  ou seja so configuro e retorno o que eu precisar
+    removi a flag de debug
+}
+
+login.dart{
+    obscureText: true adicionado para esconder a senha
+    armazenei a cor laranja em final borderColor = theme.primaryColor; pra poder usar no que preciso
+    usei a prop border dentro do inputdecoration dos textfield pra poder deixar ela de acordo com o tema
+    quando o input text está clicado a cor do texto agora é laranja por causa do labelStyle: TextStyle(color: borderColor)
+    padding adicionado ao redor do conteudo pra nao deixar tudo colado
+    cada botão tem um Padding com EdgeInsets.symmetric(vertical: 8.0) e o double.infinity para garante que os botões ocupem toda a largura
+}
+
+
+cadastro.dart {
+    radiobuttons / radiolisttile adicionados para poder selecionar o tipo de usuário tentei manter as cores do tema
+    obscureText: true adicionado para esconder a senha
+    o widget agora é stateful pra poder salvar o estado dos radiobuttons
+}
+
+homePage.dart {
+    alterada a ordem dos botoes para deixar mais parecido como o prototipo entregue
+}
+/--------------------------------------------------------------------------------------------------------------------------------/
+
+
