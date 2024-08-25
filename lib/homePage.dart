@@ -32,7 +32,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       // AppBar que exibe o título da aplicação no topo
       appBar: AppBar(
-        title: const Text('DealMaster'),
+        title: Text('DealMaster'),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
@@ -66,8 +66,7 @@ class _HomePageState extends State<HomePage> {
         ],
         currentIndex:
             _selectedIndex, // Índice atual que controla qual página é exibida
-        selectedItemColor: const Color.fromRGBO(
-            255, 151, 76, 1), // Cor do ícone e texto da aba selecionada
+        //selectedItemColor: Color.fromARGB(255, 255, 255, 255), // Cor do ícone e texto da aba selecionada
         onTap:
             _onItemTapped, // Chama a função quando o usuário seleciona uma aba
       ),
@@ -118,6 +117,7 @@ class ContractsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Contratos'),
+        centerTitle: true,
       ),
       body: ListView.builder(
         // Número de contratos na lista

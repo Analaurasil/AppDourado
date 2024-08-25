@@ -64,6 +64,15 @@ class MyApp extends StatelessWidget {
           ),
           elevation: 8.0,  // Elevação do FAB
         ),
+      // Definindo um tema personalizado para a BottomNavigationBar
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Color.fromRGBO(255, 151, 76, 1), // Cor de fundo da barra de navegação inferior
+          selectedItemColor: Colors.white, // Cor do item selecionado
+          unselectedItemColor: Colors.white70, // Cor dos itens não selecionados
+          selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold), // Estilo do rótulo selecionado
+          unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal), // Estilo do rótulo não selecionado
+          elevation: 10.0, // Elevação da barra de navegação inferior
+        ),
     );
   }
 }
