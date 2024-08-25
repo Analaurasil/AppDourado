@@ -115,21 +115,34 @@ class ContractsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      // Número de contratos na lista
-      itemCount: _contracts.length,
-      // Constrói cada item da lista com base no índice
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: const Icon(Icons.description), // Ícone na frente de cada contrato
-          title: Text(_contracts[index]), // Texto do contrato
-          trailing: const Icon(Icons.arrow_forward), // Ícone de seta à direita
-          onTap: () {
-            // Lógica para navegar para os detalhes do contrato
-            // Ainda não implementado
-          },
-        );
-      },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Contratos'),
+      ),
+      body: ListView.builder(
+        // Número de contratos na lista
+        itemCount: _contracts.length,
+        // Constrói cada item da lista com base no índice
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: const Icon(Icons.description), // Ícone na frente de cada contrato
+            title: Text(_contracts[index]), // Texto do contrato
+            trailing: const Icon(Icons.arrow_forward), // Ícone de seta à direita
+            onTap: () {
+              // Lógica para navegar para os detalhes do contrato
+              // Ainda não implementado
+            },
+          );
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Lógica para adicionar um novo contrato 
+          //print('Botão flutuante clicado!');
+        },
+        child: Icon(Icons.add),
+        tooltip: 'Adicionar novo contrato',
+      ),
     );
   }
 }
@@ -177,13 +190,21 @@ class ReportPage extends StatelessWidget {
           ),
           const SizedBox(height: 20.0), // Espaçamento antes do botão
           // Botão para gerar relatório completo
-          ElevatedButton(
+          FloatingActionButton(
+            onPressed: () {
+            // Lógica para adicionar um novo contrato 
+            //print('Botão flutuante clicado!');
+            },
+            child: Icon(Icons.download_rounded),
+            tooltip: 'Gerar Relatório',
+          ),
+          /*ElevatedButton(
             onPressed: () {
               // Ação para gerar um relatório completo
               // Ainda não implementado
             },
             child: const Text('Gerar Relatório Completo'), // Texto do botão
-          ),
+          ),*/
         ],
       ),
     );

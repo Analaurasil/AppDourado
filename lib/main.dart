@@ -56,6 +56,14 @@ class MyApp extends StatelessWidget {
           foregroundColor: Colors.white,
         ),
       ),
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: Color.fromRGBO(255, 151, 76, 1),  // Cor de fundo do FAB
+          foregroundColor: Colors.white,  // Cor do ícone no FAB
+          shape: RoundedRectangleBorder(  // Forma personalizada do FAB
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          elevation: 8.0,  // Elevação do FAB
+        ),
     );
   }
 }
