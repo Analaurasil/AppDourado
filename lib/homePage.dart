@@ -33,6 +33,15 @@ class _HomePageState extends State<HomePage> {
       // AppBar que exibe o título da aplicação no topo
       appBar: AppBar(
         title: const Text('DealMaster'),
+        centerTitle: true,
+        actions: <Widget>[
+          IconButton(
+            icon:Icon(Icons.menu_outlined),
+            onPressed: (){
+              
+            },
+          )
+        ]
       ),
       // O corpo da tela será a página correspondente ao índice selecionado
       body: _pages[_selectedIndex],
@@ -41,17 +50,17 @@ class _HomePageState extends State<HomePage> {
         items: const <BottomNavigationBarItem>[
           // Item do BottomNavigationBar para a página de Contratos
           BottomNavigationBarItem(
-            icon: Icon(Icons.description), // Ícone da aba
+            icon: Icon(Icons.article_outlined), // Ícone da aba
             label: 'Contratos', // Texto da aba
           ),
           // Item do BottomNavigationBar para a página de Agenda
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today), // Ícone da aba
+            icon: Icon(Icons.calendar_month), // Ícone da aba
             label: 'Agenda', // Texto da aba
           ),
           // Item do BottomNavigationBar para a página de Relatório
           BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart), // Ícone da aba
+            icon: Icon(Icons.add_chart), // Ícone da aba
             label: 'Relatório', // Texto da aba
           ),
         ],
