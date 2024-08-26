@@ -2,19 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:signature/signature.dart';
 import 'dart:typed_data';
 
-void main() => runApp(const SignatureApp());
-
-class SignatureApp extends StatelessWidget {
-  const SignatureApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: FormContrato(),
-    );
-  }
-}
-
 class FormContrato extends StatefulWidget {
   const FormContrato({super.key});
 
@@ -38,43 +25,8 @@ class _FormContratoState extends State<FormContrato> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              'CONTRATANTE',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: ListTile(
-                    title: const Text('PJ'),
-                    leading: Radio<String>(
-                      value: 'PJ',
-                      groupValue: _selectedOption,
-                      onChanged: (String? value) {
-                        setState(() {
-                          _selectedOption = value;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: ListTile(
-                    title: const Text('PF'),
-                    leading: Radio<String>(
-                      value: 'PF',
-                      groupValue: _selectedOption,
-                      onChanged: (String? value) {
-                        setState(() {
-                          _selectedOption = value;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            _buildSectionTitle(context, 'CONTRATANTE'),
+            _buildRadioOptions(),
             const TextField(
               decoration: InputDecoration(
                 labelText: 'Nome',
@@ -87,10 +39,7 @@ class _FormContratoState extends State<FormContrato> {
               ),
             ),
             const SizedBox(height: 20.0),
-            Text(
-              'CONTRATADA',
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
+            _buildSectionTitle(context, 'CONTRATADA'),
             const SizedBox(height: 5.0),
             const TextField(
               decoration: InputDecoration(
@@ -157,6 +106,49 @@ class _FormContratoState extends State<FormContrato> {
     );
   }
 
+  Widget _buildSectionTitle(BuildContext context, String title) {
+    return Text(
+      title,
+      style: Theme.of(context).textTheme.bodyLarge,
+    );
+  }
+
+  Widget _buildRadioOptions() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Expanded(
+          child: ListTile(
+            title: const Text('PJ'),
+            leading: Radio<String>(
+              value: 'PJ',
+              groupValue: _selectedOption,
+              onChanged: (String? value) {
+                setState(() {
+                  _selectedOption = value;
+                });
+              },
+            ),
+          ),
+        ),
+        Expanded(
+          child: ListTile(
+            title: const Text('PF'),
+            leading: Radio<String>(
+              value: 'PF',
+              groupValue: _selectedOption,
+              onChanged: (String? value) {
+                setState(() {
+                  _selectedOption = value;
+                });
+              },
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
   Widget _buildSignatureField(
       String label, Uint8List? signature, VoidCallback onTap) {
     return GestureDetector(
@@ -183,34 +175,56 @@ class _FormContratoState extends State<FormContrato> {
     showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: const Text('Assine aqui'),
-          content: Signature(
-            controller: controller,
-            width: 300,
-            height: 300,
-            backgroundColor: Colors.grey[200]!,
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                controller.clear();
-              },
-              child: const Text('Limpar'),
-            ),
-            TextButton(
-              onPressed: () async {
-                final signature = await controller.toPngBytes();
-                if (signature != null) {
-                  onSignatureSelected(signature);
-                }
-                Navigator.of(context).pop();
-              },
-              child: const Text('Salvar'),
-            ),
-          ],
+        return SignatureDialog(
+          controller: controller,
+          onSignatureSelected: onSignatureSelected,
         );
       },
+    );
+  }
+}
+
+class SignatureDialog extends StatelessWidget {
+  final SignatureController controller;
+  final Function(Uint8List) onSignatureSelected;
+
+  const SignatureDialog({
+    Key? key,
+    required this.controller,
+    required this.onSignatureSelected,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Assine aqui'),
+      content: Container(
+        width: 300,
+        height: 300,
+        color: Colors.grey[200],
+        child: Signature(
+          controller: controller,
+          backgroundColor: Colors.transparent,
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () {
+            controller.clear();
+          },
+          child: const Text('Limpar'),
+        ),
+        TextButton(
+          onPressed: () async {
+            final signature = await controller.toPngBytes();
+            if (signature != null) {
+              onSignatureSelected(signature);
+            }
+            Navigator.of(context).pop();
+          },
+          child: const Text('Salvar'),
+        ),
+      ],
     );
   }
 }

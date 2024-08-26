@@ -1,19 +1,35 @@
-//import 'package:dealmaster/cadastro.dart';
 import 'package:flutter/material.dart';
-import 'package:dealmaster/homePage.dart';
-//import 'package:dealmaster/login.dart';
+import 'package:dealmaster/login.dart';
+import 'package:dealmaster/cadastro.dart';
+import 'package:go_router/go_router.dart';
+
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
+
+final GoRouter _router = GoRouter(
+    routes: [
+      GoRoute(
+        path: '/',
+        builder: (context, state) => const TelaLogin(),
+      ),
+      GoRoute(
+        path: '/cadastro',
+        builder: (context, state) => const TelaCadastro(),
+      ),
+    ],
+  );
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: _router,
       debugShowCheckedModeBanner: false,
+      title: 'App Dourado',
       theme: estilosDoTema(),
-      home: HomePage(),
     );
   }
 
