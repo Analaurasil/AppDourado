@@ -16,6 +16,8 @@ class _FormContratoState extends State<FormContrato> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final laranja = theme.primaryColor;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Contrato'),
@@ -27,29 +29,57 @@ class _FormContratoState extends State<FormContrato> {
           children: [
             _buildSectionTitle(context, 'CONTRATANTE'),
             _buildRadioOptions(),
-            const TextField(
+            TextField(
               decoration: InputDecoration(
                 labelText: 'Nome',
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: laranja),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: laranja),
+                ),
+                labelStyle: TextStyle(color: laranja),
               ),
             ),
             const SizedBox(height: 5.0),
-            const TextField(
+            TextField(
               decoration: InputDecoration(
                 labelText: 'CNPJ/CPF',
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: laranja),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: laranja),
+                ),
+                labelStyle: TextStyle(color: laranja),
               ),
             ),
             const SizedBox(height: 20.0),
             _buildSectionTitle(context, 'CONTRATADA'),
             const SizedBox(height: 5.0),
-            const TextField(
+            TextField(
               decoration: InputDecoration(
                 labelText: 'Nome',
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: laranja),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: laranja),
+                ),
+                labelStyle: TextStyle(color: laranja),
               ),
             ),
             const SizedBox(height: 5.0),
-            const TextField(
+            TextField(
               decoration: InputDecoration(
                 labelText: 'CNPJ',
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: laranja),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: laranja),
+                ),
+                labelStyle: TextStyle(color: laranja),
               ),
             ),
             const SizedBox(height: 5.0),
@@ -96,7 +126,7 @@ class _FormContratoState extends State<FormContrato> {
             const SizedBox(height: 20.0),
             ElevatedButton(
               onPressed: () {
-                // Ação de salvar
+                
               },
               child: const Text('Salvar'),
             ),
@@ -123,6 +153,7 @@ class _FormContratoState extends State<FormContrato> {
             leading: Radio<String>(
               value: 'PJ',
               groupValue: _selectedOption,
+              activeColor: Theme.of(context).primaryColor,
               onChanged: (String? value) {
                 setState(() {
                   _selectedOption = value;
@@ -137,6 +168,7 @@ class _FormContratoState extends State<FormContrato> {
             leading: Radio<String>(
               value: 'PF',
               groupValue: _selectedOption,
+              activeColor: Theme.of(context).primaryColor,
               onChanged: (String? value) {
                 setState(() {
                   _selectedOption = value;

@@ -1,3 +1,5 @@
+import 'package:dealmaster/formcontrato.dart';
+import 'package:dealmaster/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:dealmaster/login.dart';
 import 'package:dealmaster/cadastro.dart';
@@ -20,6 +22,13 @@ final GoRouter _router = GoRouter(
         path: '/cadastro',
         builder: (context, state) => const TelaCadastro(),
       ),
+      GoRoute(path: '/home',
+      builder: (context , state) => const HomePage(),
+      ),
+       GoRoute(
+      path: '/formcontrato',
+      builder: (context, state) => const FormContrato(),
+    ),
     ],
   );
 

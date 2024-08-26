@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
-// Classe responsável por exibir os detalhes de um contrato específico
 class VisualizarContrato extends StatelessWidget {
   final String nome;
   final String contratante;
   final String cpfCnpj;
   final String vencimento;
 
-  // Construtor que recebe os dados do contrato
-  const VisualizarContrato({super.key, 
+  const VisualizarContrato({
+    super.key,
     required this.nome,
     required this.contratante,
     required this.cpfCnpj,
@@ -19,38 +18,34 @@ class VisualizarContrato extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor:
-            const Color.fromRGBO(255, 151, 76, 1), // Cor personalizada da AppBar
+        backgroundColor: const Color.fromRGBO(255, 151, 76, 1),
         title: Text(
-          nome, // O título da AppBar é o nome do contrato
+          nome,
           style: const TextStyle(
-            fontWeight: FontWeight.bold, // Negrito no título
+            fontWeight: FontWeight.bold,
           ),
         ),
-        centerTitle: true, // Centraliza o título da AppBar
+        centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0), // Espaçamento interno da tela
+        padding: const EdgeInsets.all(20.0),
         child: Column(
-          crossAxisAlignment:
-              CrossAxisAlignment.start, // Alinha os textos à esquerda
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Exibe o nome do contrato com estilo destacado
             Text(
               nome,
               style: const TextStyle(
                 fontSize: 26,
-                fontWeight: FontWeight.bold, // Negrito para destaque
-                color: Colors.black87, // Cor do texto
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
               ),
             ),
-            const SizedBox(height: 24.0), // Espaçamento vertical
-            // Exibe o contratante do contrato com um rótulo
+            const SizedBox(height: 24.0),
             Text(
               'Contratante:',
               style: TextStyle(
                 fontSize: 18,
-                color: Colors.grey[700], // Cor mais suave para o rótulo
+                color: Colors.grey[700],
               ),
             ),
             const SizedBox(height: 8.0),
@@ -58,12 +53,11 @@ class VisualizarContrato extends StatelessWidget {
               contratante,
               style: const TextStyle(
                 fontSize: 20,
-                fontWeight: FontWeight.w500, // Negrito moderado
+                fontWeight: FontWeight.w500,
                 color: Colors.black87,
               ),
             ),
-            const SizedBox(height: 20.0), // Espaçamento vertical
-            // Exibe o CPF/CNPJ do contratante com um rótulo
+            const SizedBox(height: 20.0),
             Text(
               'CPF/CNPJ:',
               style: TextStyle(
@@ -81,8 +75,6 @@ class VisualizarContrato extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20.0),
-
-            // ebxie a data de vencimento do contrato com um rotulo
             Text(
               'Data de Vencimento:',
               style: TextStyle(
@@ -99,26 +91,22 @@ class VisualizarContrato extends StatelessWidget {
                 color: Colors.black87,
               ),
             ),
-            const Spacer(), // Espaçamento flexível para empurrar o botão para o final da tela
-            // Botão estilizado para realizar uma ação no contrato
+            const Spacer(),
             ElevatedButton(
-              onPressed: () {
-                // Ação a ser executada (exemplo: editar contrato)
-              },
+              onPressed: () {},
               style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    const Color.fromRGBO(255, 151, 76, 1), // Cor do botão atualizada
-                padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 16.0),
+                backgroundColor: const Color.fromRGBO(255, 151, 76, 1),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 32.0, vertical: 16.0),
                 shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.circular(10.0), // Bordas arredondadas
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
               ),
               child: const Text(
                 'Editar Contrato',
                 style: TextStyle(
                   fontSize: 18,
-                  color: Colors.white, // Cor do texto no botão
+                  color: Colors.white,
                 ),
               ),
             ),

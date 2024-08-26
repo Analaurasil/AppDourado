@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'visualizarContratos.dart'; // Importa a página de visualização de contratos
+import 'visualizar_contratos.dart';
 
-// Classe responsável pela tela "Meus Contratos"
 class MeusContratos extends StatelessWidget {
-  // Lista fictícia de contratos com contratante, CPF/CNPJ e data de vencimento
   final List<Map<String, String>> _contracts = [
     {
       'nome': 'Contrato A',
@@ -25,40 +23,35 @@ class MeusContratos extends StatelessWidget {
     },
   ];
 
-   MeusContratos({super.key});
+  MeusContratos({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // Estilização da AppBar de acordo com o protótipo
-        backgroundColor: const Color.fromRGBO(255, 151, 76, 1), // Cor personalizada
+        backgroundColor: const Color.fromRGBO(255, 151, 76, 1),
         title: const Text(
           'Meus Contratos',
           style: TextStyle(
-            fontWeight: FontWeight.bold, // Negrito no título
-            fontSize: 20, // Aumenta o tamanho da fonte
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
-        ), // Título da AppBar
-        centerTitle: true, // Centraliza o título da AppBar
+        ),
+        centerTitle: true,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0), // Espaçamento nas bordas
+        padding: const EdgeInsets.all(16.0),
         child: ListView.builder(
-          itemCount: _contracts.length, // Define o número de contratos na lista
+          itemCount: _contracts.length,
           itemBuilder: (context, index) {
-            // Cada item da lista é um ListTile estilizado
             return Card(
-              elevation: 4, // Sombra para destacar o cartão
-              margin:
-                  const EdgeInsets.symmetric(vertical: 10.0), // Espaçamento vertical
+              elevation: 4,
+              margin: const EdgeInsets.symmetric(vertical: 10.0),
               shape: RoundedRectangleBorder(
-                borderRadius:
-                    BorderRadius.circular(15.0), // Bordas arredondadas
+                borderRadius: BorderRadius.circular(15.0),
               ),
               child: ListTile(
                 leading: const CircleAvatar(
-                  // Usando um avatar circular com o ícone de contrato
                   backgroundColor: Colors.orangeAccent,
                   child: Icon(Icons.description, color: Colors.white),
                 ),
@@ -66,20 +59,19 @@ class MeusContratos extends StatelessWidget {
                   _contracts[index]['nome']!,
                   style: const TextStyle(
                     fontSize: 18,
-                    fontWeight: FontWeight.bold, // Negrito no nome do contrato
+                    fontWeight: FontWeight.bold,
                   ),
-                ), // Nome do contrato
+                ),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      _contracts[index]
-                          ['contratante']!, // Contratante do contrato
+                      _contracts[index]['contratante']!,
                       style: const TextStyle(fontSize: 16),
                     ),
                     const SizedBox(height: 4.0),
                     Text(
-                      'Vencimento: ${_contracts[index]['vencimento']!}', // Data de vencimento
+                      'Vencimento: ${_contracts[index]['vencimento']!}',
                       style: const TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -88,16 +80,14 @@ class MeusContratos extends StatelessWidget {
                   ],
                 ),
                 trailing: Icon(
-                  Icons.arrow_forward_ios, // Ícone de seta para frente
+                  Icons.arrow_forward_ios,
                   color: Colors.grey[700],
-                ), // Ícone para indicar que pode ser clicado
+                ),
                 onTap: () {
-                  // Quando o usuário clicar, navega para a tela de detalhes do contrato
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => VisualizarContrato(
-                        // Passa os detalhes do contrato para a próxima tela
                         nome: _contracts[index]['nome']!,
                         contratante: _contracts[index]['contratante']!,
                         cpfCnpj: _contracts[index]['cpfCnpj']!,

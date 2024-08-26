@@ -1,4 +1,3 @@
-import 'package:dealmaster/main.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -31,6 +30,7 @@ class _TelaLoginState extends State<TelaLogin> {
       final prefs = await SharedPreferences.getInstance();
       await prefs.setString('auth_token', token);
       print('Token salvo: $token');
+      context.go('/home');
       
     } catch (e) {
       print('Erro ao enviar dados: $e');
@@ -101,7 +101,7 @@ class _TelaLoginState extends State<TelaLogin> {
                   width: 200, 
                   child: ElevatedButton(
                     onPressed:_login,
-                    child: Text(
+                    child: const Text(
                       'Entrar',
                       style: TextStyle(fontSize: 18), 
                     ),
@@ -116,7 +116,7 @@ class _TelaLoginState extends State<TelaLogin> {
                     onPressed: () {
                       context.go('/cadastro');
                     },
-                    child: Text(
+                    child: const Text(
                       'Registrar',
                       style: TextStyle(fontSize: 18), 
                     ),
