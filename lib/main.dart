@@ -1,7 +1,7 @@
-import 'package:dealmaster/cadastro.dart';
+//import 'package:dealmaster/cadastro.dart';
 import 'package:flutter/material.dart';
 import 'package:dealmaster/homePage.dart';
-import 'package:dealmaster/login.dart';
+//import 'package:dealmaster/login.dart';
 
 void main() {
   runApp(MyApp());
@@ -65,7 +65,7 @@ class MyApp extends StatelessWidget {
           elevation: 8.0,  // Elevação do FAB
         ),
       // Definindo um tema personalizado para a BottomNavigationBar
-        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: Color.fromRGBO(255, 151, 76, 1), // Cor de fundo da barra de navegação inferior
           selectedItemColor: Colors.white, // Cor do item selecionado
           unselectedItemColor: Colors.white70, // Cor dos itens não selecionados
@@ -73,6 +73,7 @@ class MyApp extends StatelessWidget {
           unselectedLabelStyle: TextStyle(fontWeight: FontWeight.normal), // Estilo do rótulo não selecionado
           elevation: 10.0, // Elevação da barra de navegação inferior
         ),
+      
     );
   }
 }

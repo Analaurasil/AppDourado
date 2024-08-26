@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 // Classe principal que define a página inicial como um StatefulWidget
 class HomePage extends StatefulWidget {
@@ -32,7 +34,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       // AppBar que exibe o título da aplicação no topo
       appBar: AppBar(
-        title: Text('DealMaster'),
+        title: const Text('DealMaster'),
         centerTitle: true,
         actions: <Widget>[
           IconButton(
@@ -74,32 +76,376 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-// Página da Agenda
-class AgendaPage extends StatelessWidget {
-  // Lista de compromissos fictícios
-  final List<String> _appointments = [
-    'Reunião com o cliente A - 10:00 AM',
-    'Revisão de contrato B - 01:00 PM',
-    'Call com a equipe - 03:00 PM'
-  ];
 
-   AgendaPage({super.key});
+class AgendaPage extends StatefulWidget {
+  const AgendaPage({Key? key}) : super(key: key);
+
+  @override
+  _AgendaPageState createState() => _AgendaPageState();
+}
+
+class _AgendaPageState extends State<AgendaPage> {
+  late final ValueNotifier<List<String>> _selectedEvents;
+  CalendarFormat _calendarFormat = CalendarFormat.month;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
+  Map<DateTime, List<String>> _events = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDay = _focusedDay;
+    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+
+    // Inicialize a formatação de data para português
+    initializeDateFormatting('pt_BR', null);
+  }
+
+  List<String> _getEventsForDay(DateTime day) {
+    // Retorna uma lista de eventos para o dia fornecido.
+    return _events[day] ?? [];
+  }
+
+  void _addEvent(String event) {
+    if (_selectedDay != null) {
+      setState(() {
+        if (_events[_selectedDay!] != null) {
+          _events[_selectedDay!]!.add(event);
+        } else {
+          _events[_selectedDay!] = [event];
+        }
+        _selectedEvents.value = _getEventsForDay(_selectedDay!);
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _selectedEvents.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      // Número de itens na lista
-      itemCount: _appointments.length,
-      // Constrói cada item da lista com base no índice
-      itemBuilder: (context, index) {
-        return ListTile(
-          leading: const Icon(Icons.event), // Ícone na frente de cada compromisso
-          title: Text(_appointments[index]), // Texto do compromisso
-        );
-      },
+    return Scaffold(
+      body: Column(
+        children: [
+          TableCalendar(
+            locale: 'pt_BR',  // Define o idioma do calendário para português
+            firstDay: DateTime.utc(2024, 1, 1),
+            lastDay: DateTime.utc(2028, 12, 31),
+            focusedDay: _focusedDay,
+            calendarFormat: _calendarFormat,
+            availableCalendarFormats: const {
+              CalendarFormat.month: 'Mês'
+            },
+            selectedDayPredicate: (day) {
+              return isSameDay(_selectedDay, day);
+            },
+            onDaySelected: (selectedDay, focusedDay) {
+              setState(() {
+                _selectedDay = selectedDay;
+                _focusedDay = focusedDay;
+                _selectedEvents.value = _getEventsForDay(selectedDay);
+              });
+            },
+            onFormatChanged: (format) {
+              setState(() {
+                _calendarFormat = format;
+              });
+            },
+            onPageChanged: (focusedDay) {
+              _focusedDay = focusedDay;
+            },
+            eventLoader: _getEventsForDay,
+            calendarStyle: CalendarStyle(
+              selectedDecoration: BoxDecoration(
+                color: Color.fromRGBO(255, 151, 76, 1), // Cor de fundo para o dia selecionado
+                shape: BoxShape.rectangle,
+              ),
+              selectedTextStyle: TextStyle(
+                color: Colors.white,  // Cor do texto para o dia selecionado
+              ),
+              todayDecoration: BoxDecoration(
+                color: Colors.orangeAccent,  // Cor de fundo para o dia atual
+                shape: BoxShape.rectangle,
+              ),
+              todayTextStyle: TextStyle(
+                color: Colors.white,  // Cor do texto para o dia atual
+              ),
+            ),
+          ),
+          const SizedBox(height: 8.0),
+          Expanded(
+            child: ValueListenableBuilder<List<String>>(
+              valueListenable: _selectedEvents,
+              builder: (context, value, _) {
+                return ListView.builder(
+                  itemCount: value.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(value[index]),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showAddEventDialog(),
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+
+  void _showAddEventDialog() {
+    TextEditingController _eventController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        title: Text(
+          'Adicionar Evento',
+          style: TextStyle(
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+            color: Color.fromRGBO(255, 151, 76, 1)
+          ),
+        ),
+        content: TextField(
+          controller: _eventController,
+          decoration: InputDecoration(
+            hintText: 'Digite o evento',
+            hintStyle: TextStyle(
+              color: Colors.grey
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Color.fromRGBO(255, 151, 76, 1)
+              ), // Cor da borda do campo de texto
+              borderRadius: BorderRadius.circular(5.0), // Arredondamento da borda
+            ),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Cancelar',
+              style: TextStyle(
+                color: Color.fromRGBO(255, 151, 76, 1) // Cor do texto do botão "Cancelar"
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              _addEvent(_eventController.text);
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Adicionar',
+              style: TextStyle(
+                color: Color.fromRGBO(255, 151, 76, 1) // Cor do texto do botão "Adicionar"
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
+
+/*class AgendaPage extends StatefulWidget {
+  const AgendaPage({Key? key}) : super(key: key);
+
+  @override
+  _AgendaPageState createState() => _AgendaPageState();
+}
+
+class _AgendaPageState extends State<AgendaPage> {
+  late final ValueNotifier<List<String>> _selectedEvents;
+  CalendarFormat _calendarFormat = CalendarFormat.month;
+  DateTime _focusedDay = DateTime.now();
+  DateTime? _selectedDay;
+  Map<DateTime, List<String>> _events = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedDay = _focusedDay;
+    _selectedEvents = ValueNotifier(_getEventsForDay(_selectedDay!));
+  }
+
+  List<String> _getEventsForDay(DateTime day) {
+    // Retorna uma lista de eventos para o dia fornecido.
+    return _events[day] ?? [];
+  }
+
+  void _addEvent(String event) {
+    if (_selectedDay != null) {
+      setState(() {
+        if (_events[_selectedDay!] != null) {
+          _events[_selectedDay!]!.add(event);
+        } else {
+          _events[_selectedDay!] = [event];
+        }
+        _selectedEvents.value = _getEventsForDay(_selectedDay!);
+      });
+    }
+  }
+
+
+  @override
+  void dispose() {
+    _selectedEvents.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          TableCalendar(
+            firstDay: DateTime.utc(2024, 1, 1),
+            lastDay: DateTime.utc(2028, 12, 31),
+            focusedDay: _focusedDay,
+            calendarFormat: _calendarFormat,
+            availableCalendarFormats: const {
+              CalendarFormat.month: 'Mês'
+            },
+            selectedDayPredicate: (day) {
+              return isSameDay(_selectedDay, day);
+            },
+            onDaySelected: (selectedDay, focusedDay) {
+              setState(() {
+                _selectedDay = selectedDay;
+                _focusedDay = focusedDay;
+                _selectedEvents.value = _getEventsForDay(selectedDay);
+              });
+            },
+            onFormatChanged: (format) {
+              setState(() {
+                _calendarFormat = format;
+              });
+            },
+            onPageChanged: (focusedDay) {
+              _focusedDay = focusedDay;
+            },
+            eventLoader: _getEventsForDay,
+            calendarStyle: CalendarStyle(
+              selectedDecoration: BoxDecoration(
+                color: Color.fromRGBO(255, 151, 76, 1), // Cor de fundo para o dia selecionado
+                shape: BoxShape.rectangle,
+              ),
+              selectedTextStyle: TextStyle(
+                color: Colors.white,  // Cor do texto para o dia selecionado
+              ),
+              todayDecoration: BoxDecoration(
+                color: Colors.orangeAccent,  // Cor de fundo para o dia atual
+                shape: BoxShape.rectangle,
+              ),
+              todayTextStyle: TextStyle(
+                color: Colors.white,  // Cor do texto para o dia atual
+              ),
+            ),
+          ),
+          const SizedBox(height: 8.0),
+          Expanded(
+            child: ValueListenableBuilder<List<String>>(
+              valueListenable: _selectedEvents,
+              builder: (context, value, _) {
+                return ListView.builder(
+                  itemCount: value.length,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(value[index]),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _showAddEventDialog(),
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+
+  void _showAddEventDialog() {
+    TextEditingController _eventController = TextEditingController();
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        title: Text(
+          'Adicionar Evento',
+          style: TextStyle(
+            fontSize: 25.0,
+            fontWeight: FontWeight.bold,
+            color: Color.fromRGBO(255, 151, 76, 1)
+          ),
+          ),
+        content: TextField(
+          controller: _eventController,
+          decoration: InputDecoration(
+            hintText: 'Digite o evento',
+            hintStyle: TextStyle(
+              color: Colors.grey
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                color: Color.fromRGBO(255, 151, 76, 1)
+                ), // Cor da borda do campo de texto
+              borderRadius: BorderRadius.circular(5.0), // Arredondamento da borda
+          ),
+            ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Cancelar',
+              style: TextStyle(
+               color: Color.fromRGBO(255, 151, 76, 1) // Cor do texto do botão "Cancelar"
+              ),
+            ),
+          ),
+          TextButton(
+            onPressed: () {
+              _addEvent(_eventController.text);
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Adicionar',
+              style: TextStyle(
+                color: Color.fromRGBO(255, 151, 76, 1) // Cor do texto do botão "Cancelar"
+              ),
+              ),
+          ),
+        ],
+      ),
+    );
+  }
+}*/
+
 
 // Página de Contratos
 class ContractsPage extends StatelessWidget {
@@ -198,13 +544,6 @@ class ReportPage extends StatelessWidget {
             child: Icon(Icons.download_rounded),
             tooltip: 'Gerar Relatório',
           ),
-          /*ElevatedButton(
-            onPressed: () {
-              // Ação para gerar um relatório completo
-              // Ainda não implementado
-            },
-            child: const Text('Gerar Relatório Completo'), // Texto do botão
-          ),*/
         ],
       ),
     );
