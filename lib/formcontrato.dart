@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:signature/signature.dart';
 import 'dart:typed_data';
+import 'package:dio/dio.dart';
 
 class FormContrato extends StatefulWidget {
   const FormContrato({super.key});
@@ -13,6 +15,48 @@ class _FormContratoState extends State<FormContrato> {
   String? _selectedOption = 'PJ';
   Uint8List? _contractorSignature;
   Uint8List? _contractedSignature;
+  String _nome = '';
+  String _cpfCnpj = '';
+  String _texto = '';
+  String _dataVencimento = '';
+
+  void _enviarRequisicao() async {
+    final Map<String, dynamic> data = {
+      "parceiro": {
+        "nome": _nome,
+        "tipo": _selectedOption,
+        "cpfCnpj": _cpfCnpj,
+      },
+      "texto": _texto,
+      "dataVencimento": _dataVencimento,
+    };
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final String? token = prefs.getString('auth_token');
+
+    try {
+      final dio = Dio();
+      final response = await dio.post(
+        'https://api-deal-master-app.onrender.com/api/v1/users/contract/add',
+        data: data,
+        options: Options(
+          headers: {
+            'Autorization': 'Bearer $token',
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        print('Contrato salvo com sucesso');
+      } else {
+        print('Falha ao salvar contrato');
+      }
+    } catch (e) {
+      print('Erro ao enviar requisição: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +74,11 @@ class _FormContratoState extends State<FormContrato> {
             _buildSectionTitle(context, 'CONTRATANTE'),
             _buildRadioOptions(),
             TextField(
+              onChanged: (value) {
+                setState(() {
+                  _nome = value;
+                });
+              },
               decoration: InputDecoration(
                 labelText: 'Nome',
                 enabledBorder: OutlineInputBorder(
@@ -43,6 +92,11 @@ class _FormContratoState extends State<FormContrato> {
             ),
             const SizedBox(height: 5.0),
             TextField(
+              onChanged: (value) {
+                setState(() {
+                  _cpfCnpj = value;
+                });
+              },
               decoration: InputDecoration(
                 labelText: 'CNPJ/CPF',
                 enabledBorder: OutlineInputBorder(
@@ -83,15 +137,38 @@ class _FormContratoState extends State<FormContrato> {
               ),
             ),
             const SizedBox(height: 5.0),
-            const TextField(
+            TextField(
+              onChanged: (value) {
+                setState(() {
+                  _texto = value;
+                });
+              },
               maxLines: null,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Insira o texto do contrato aqui:',
               ),
               keyboardType: TextInputType.multiline,
             ),
             const SizedBox(height: 20.0),
+            TextField(
+              onChanged: (value) {
+                setState(() {
+                  _dataVencimento = value;
+                });
+              },
+              decoration: InputDecoration(
+                labelText: 'Data',
+                enabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: laranja),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: laranja),
+                ),
+                labelStyle: TextStyle(color: laranja),
+              ),
+            ),
+            const SizedBox(height: 20),
             Row(
               children: [
                 Expanded(
@@ -125,9 +202,7 @@ class _FormContratoState extends State<FormContrato> {
             ),
             const SizedBox(height: 20.0),
             ElevatedButton(
-              onPressed: () {
-                
-              },
+              onPressed: _enviarRequisicao,
               child: const Text('Salvar'),
             ),
           ],
@@ -151,7 +226,7 @@ class _FormContratoState extends State<FormContrato> {
           child: ListTile(
             title: const Text('PJ'),
             leading: Radio<String>(
-              value: 'PJ',
+              value: 'CNPJ',
               groupValue: _selectedOption,
               activeColor: Theme.of(context).primaryColor,
               onChanged: (String? value) {
@@ -166,7 +241,7 @@ class _FormContratoState extends State<FormContrato> {
           child: ListTile(
             title: const Text('PF'),
             leading: Radio<String>(
-              value: 'PF',
+              value: 'CPF',
               groupValue: _selectedOption,
               activeColor: Theme.of(context).primaryColor,
               onChanged: (String? value) {

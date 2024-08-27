@@ -31,6 +31,7 @@ class _TelaLoginState extends State<TelaLogin> {
       await prefs.setString('auth_token', token);
       print('Token salvo: $token');
       context.go('/home');
+      //eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJkZWFsbWFzdGVyLWFwaSIsInN1YiI6IndpbEBlbWFpbC5jb20iLCJleHAiOjE3MjQ3MzU1NDB9.wcSRT7RZBLoyRByJUew7Lf3dIJSeEQEmgQAZBsJLojk
       
     } catch (e) {
       print('Erro ao enviar dados: $e');
