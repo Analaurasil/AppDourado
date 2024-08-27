@@ -91,21 +91,23 @@ class _TelaCadastroState extends State<TelaCadastro> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
+              Text(
                 'CADASTRO',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 40,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               const SizedBox(height: 20),
               const Text(
                 'Tipo de Usuário:',
+                textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
+                  
                 ),
               ),
               RadioListTile<String>(
@@ -182,6 +184,7 @@ class _TelaCadastroState extends State<TelaCadastro> {
               const SizedBox(height: 20),
                           const Text(
                 'Dados da Empresa:',
+                textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
